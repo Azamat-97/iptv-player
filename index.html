@@ -1,71 +1,79 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<title>Setanta Player</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Setanta Sports</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-<style>
-body {
-    margin: 0;
-    background: black;
-    color: white;
-    font-family: Arial;
-    text-align: center;
-}
-
-h2 {
-    margin: 20px 0;
-}
-
-button {
-    width: 90%;
-    padding: 15px;
-    margin: 10px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    background: #1e88e5;
-    color: white;
-}
-video {
-    width: 100%;
-    height: auto;
-    margin-top: 10px;
-}
-</style>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      background: black;
+    }
+    button {
+      margin: 15px;
+      padding: 14px 20px;
+      font-size: 18px;
+      background: #1e88e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 
 <body>
 
 <h2>⚽ Setanta Sports</h2>
 
-<button onclick="play('http://s8.rafail1982.uz/1263/tracks-v1a1/mono.m3u8')">
+<video id="video" controls autoplay playsinline></video>
+
+<br>
+
+<button onclick="playStream('http://s8.rafail1982.uz/1263/tracks-v1a1/mono.m3u8')">
 ▶ Setanta Sports 1
 </button>
 
-<button onclick="play('http://s8.rafail1982.uz/1264/tracks-v1a1/mono.m3u8')">
+<button onclick="playStream('http://s8.rafail1982.uz/1264/tracks-v1a1/mono.m3u8')">
 ▶ Setanta Sports 2
 </button>
 
-<video id="video" controls autoplay></video>
-
 <script>
-function play(url) {
-    const video = document.getElementById('video');
+  const video = document.getElementById('video');
+  let hls;
+
+  function playStream(url) {
+    if (hls) {
+      hls.destroy();
+    }
 
     if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(video);
+      hls = new Hls({
+        enableWorker: true,
+        lowLatencyMode: true
+      });
+      hls.loadSource(url);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        video.play();
+      });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
+      video.src = url;
+      video.play();
     } else {
-        alert("Bu qurilmada player ishlamaydi");
+      alert("Brauzer HLS ni qo‘llamaydi");
     }
-}
+  }
 </script>
 
 </body>
