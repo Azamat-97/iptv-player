@@ -2,55 +2,71 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<title>Setanta IPTV</title>
+<title>Setanta Player</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <style>
 body {
-  margin: 0;
-  background: #000;
-  font-family: Arial, sans-serif;
-  color: #fff;
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: Arial;
+    text-align: center;
 }
 
-#menu {
-  padding: 15px;
-  text-align: center;
+h2 {
+    margin: 20px 0;
 }
 
-.btn {
-  display: block;
-  margin: 10px auto;
-  padding: 15px;
-  max-width: 300px;
-  background: #1e88e5;
-  color: white;
-  text-decoration: none;
-  border-radius: 10px;
-  font-size: 18px;
+button {
+    width: 90%;
+    padding: 15px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background: #1e88e5;
+    color: white;
 }
-
-#player {
-  display: none;
-  width: 100vw;
-  height: 100vh;
-  background: black;
-}
-
 video {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="menu">
-  <h2>⚽ Setanta Sports</h2>
+<h2>⚽ Setanta Sports</h2>
 
-  <button class="btn" onclick="play('http://s8.rafail1982.uz/1263/tracks-v1a1/mono.m3u8')">
-    ▶ Setanta Sports 1
-  </button>
+<button onclick="play('http://s8.rafail1982.uz/1263/tracks-v1a1/mono.m3u8')">
+▶ Setanta Sports 1
+</button>
 
-  <button class="btn" onclick="play('http://s8.rafail1982.uz/1264/tracks-v1
+<button onclick="play('http://s8.rafail1982.uz/1264/tracks-v1a1/mono.m3u8')">
+▶ Setanta Sports 2
+</button>
+
+<video id="video" controls autoplay></video>
+
+<script>
+function play(url) {
+    const video = document.getElementById('video');
+
+    if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+    } else {
+        alert("Bu qurilmada player ishlamaydi");
+    }
+}
+</script>
+
+</body>
+</html>
