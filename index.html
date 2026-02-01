@@ -1,29 +1,72 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <title>Setanta IPTV</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { margin:0; background:#000; color:#fff; font-family:Arial }
-    .btn {
-      display:block; padding:15px; margin:10px;
-      background:#1e88e5; color:#fff; text-align:center;
-      text-decoration:none; border-radius:8px; font-size:18px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Setanta IPTV Player</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+}
+
+.header {
+  padding: 10px;
+  background: #111;
+  font-size: 18px;
+}
+
+video {
+  width: 100%;
+  height: 90vh;
+  background: black;
+}
+
+.buttons {
+  padding: 10px;
+}
+
+button {
+  width: 90%;
+  max-width: 400px;
+  padding: 12px;
+  margin: 6px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background: #1e90ff;
+  color: white;
+}
+</style>
 </head>
+
 <body>
 
-<h2 style="text-align:center;">⚽ Setanta Sports</h2>
+<div class="header">📺 Setanta Sports Player</div>
 
-<a class="btn" href="http://s8.rafail1982.uz/1263/tracks-v1a1/mono.m3u8">
-▶ Setanta Sports 1
-</a>
+<video id="player" controls autoplay></video>
 
-<a class="btn" href="http://s8.rafail1982.uz/1264/tracks-v1a1/mono.m3u8">
-▶ Setanta Sports 2
-</a>
+<div class="buttons">
+  <button onclick="play('http://s8.rafail1982.uz/1263/tracks-v1a1/mono.m3u8')">
+    ⚽ Setanta Sports 1
+  </button>
+
+  <button onclick="play('http://s8.rafail1982.uz/1264/tracks-v1a1/mono.m3u8')">
+    ⚽ Setanta Sports 2
+  </button>
+</div>
+
+<script>
+function play(url) {
+  const video = document.getElementById('player');
+  video.src = url;
+  video.play();
+}
+</script>
 
 </body>
 </html>
